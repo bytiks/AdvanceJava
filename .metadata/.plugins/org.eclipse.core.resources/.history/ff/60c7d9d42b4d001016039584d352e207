@@ -1,0 +1,17 @@
+package in.up.test;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+public class UpdateTest {
+	public static void main(String[] args) throws Exception{
+		
+		// load the driver
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		System.out.println("Driver Loaded");
+		
+		// Connect the Database
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db?useSSL=false","root","2314");
+		System.out.println("Databse Connected");
+	}
+}

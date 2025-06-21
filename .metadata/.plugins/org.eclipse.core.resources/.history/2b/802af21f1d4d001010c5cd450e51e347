@@ -1,0 +1,51 @@
+package in.sp.test;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
+public class InsertTest {
+	public static void main(String[] args) throws Exception {
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		System.out.println("Successfully Loaded");
+
+		Connection con = DriverManager.getConnection(
+			"jdbc:mysql://localhost:3306/db?useSSL=false", "root", "2314");
+		System.out.println("Connection made to the database successfully");
+
+		// Insert a record
+		String insertQuery = "INSERT INTO register(name, email, password, gender, city) VALUES (?, ?, ?, ?, ?)";
+		PreparedStatement ps = con.prepareStatement(insertQuery);
+		ps.setString(1, "Saif Ali Khan");
+		ps.setString(2, "saifalikhan@gmail.com");
+		ps.setString(3, "Saif");
+		ps.setString(4, "Male");
+		ps.setString(5, "Kanpur");
+
+		int i = ps.executeUpdate();
+
+		if (i > 0) {
+			System.out.println("Successfully inserted record.");
+		} else {
+			System.out.println("Insert failed.");
+		}
+
+		// Now use executeQuery() to fetch data
+		PreparedStatement ps2 = con.prepareStatement("SELECT * FROM register");
+		ResultSet rs = ps2.executeQuery();
+
+		System.out.println("\n--- Records in 'register' table ---");
+		while (rs.next()) {
+			System.out.println(
+				rs.getString("name") + " | " +
+				rs.getString("email") + " | " +
+				rs.getString("password") + " | " +
+				rs.getString("gender") + " | " +
+				rs.getString("city")
+			);
+		}
+
+		con.close();
+	}
+}

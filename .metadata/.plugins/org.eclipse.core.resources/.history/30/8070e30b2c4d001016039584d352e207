@@ -1,0 +1,26 @@
+package in.up.test;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+
+public class UpdateTest {
+	public static void main(String[] args) throws Exception{
+		
+		// load the driver
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		System.out.println("Driver Loaded");
+		
+		// Connect the Database
+		Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db?useSSL=false","root","2314");
+		System.out.println("Databse Connected");
+		
+		// Update a value in the table
+		PreparedStatement ps = con.prepareStatement("UPDATE register SET city=? WHERE email=?");
+		ps.setString(1, "Kanpur");
+		ps.setString(2, "saif7862254j@gmail.com");
+		int i = ps.executeUpdate();
+		
+		if(i > 0)
+	}
+}
